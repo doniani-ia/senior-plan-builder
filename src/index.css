@@ -54,10 +54,10 @@
     --gradient-accent: linear-gradient(135deg, hsl(142, 76%, 36%), hsl(142, 76%, 46%));
     
     /* Shadows */
-    --shadow-sm: 0 1px 2px 0 hsl(220, 43%, 11%, 0.05);
-    --shadow-md: 0 4px 6px -1px hsl(220, 43%, 11%, 0.1), 0 2px 4px -1px hsl(220, 43%, 11%, 0.06);
-    --shadow-lg: 0 10px 15px -3px hsl(220, 43%, 11%, 0.1), 0 4px 6px -2px hsl(220, 43%, 11%, 0.05);
-    --shadow-xl: 0 20px 25px -5px hsl(220, 43%, 11%, 0.1), 0 10px 10px -5px hsl(220, 43%, 11%, 0.04);
+    --shadow-sm: 0 1px 2px 0 rgba(28, 35, 56, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(28, 35, 56, 0.1), 0 2px 4px -1px rgba(28, 35, 56, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(28, 35, 56, 0.1), 0 4px 6px -2px rgba(28, 35, 56, 0.05);
+    --shadow-xl: 0 20px 25px -5px rgba(28, 35, 56, 0.1), 0 10px 10px -5px rgba(28, 35, 56, 0.04);
 
     /* Professional transitions */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
