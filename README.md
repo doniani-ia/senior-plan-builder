@@ -1,73 +1,69 @@
-# Welcome to your Lovable project
+# Vendas Pro - PDI
 
-## Project info
+Sistema completo de Avaliação de Senioridade e PDI (Plano de Desenvolvimento Individual) para equipes de vendas.
 
-**URL**: https://lovable.dev/projects/6348068e-12a0-4f8e-add8-2b7b48717ba9
+## 🚀 Quick Start
 
-## How can I edit this code?
+### Desenvolvimento Local
 
-There are several ways of editing your application.
-
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/6348068e-12a0-4f8e-add8-2b7b48717ba9) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+Para trabalhar localmente, clone este repositório e execute:
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+# Step 1: Clone the repository
+git clone https://github.com/doniani-ia/senior-plan-builder.git
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+# Step 2: Navigate to the project directory
+cd senior-plan-builder
 
-# Step 3: Install the necessary dependencies.
+# Step 3: Install the necessary dependencies
 npm i
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Step 4: Start the development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+### Tecnologias Utilizadas
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+Este projeto é construído com:
 
-**Use GitHub Codespaces**
+- **Frontend**: React 18, TypeScript, Vite
+- **UI/UX**: shadcn/ui, Tailwind CSS, Radix UI
+- **Backend**: Supabase (PostgreSQL, Auth, RLS, Edge Functions)
+- **Email**: Resend API
+- **Deploy**: Vercel, Netlify ou similar
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### Funcionalidades Principais
 
-## What technologies are used for this project?
+- ✅ **Autenticação e Autorização**: Sistema completo de login com roles (admin, gestor, colaborador)
+- ✅ **Gestão de Questionários**: CRUD completo para questionários e perguntas
+- ✅ **Avaliação de Colaboradores**: Formulários dinâmicos com cálculo automático de pontuação
+- ✅ **Geração de PDI**: Criação automática de planos de desenvolvimento individual
+- ✅ **Sistema de Email**: Envio automático de PDIs via Resend
+- ✅ **Dashboard Completo**: Interface moderna para gestores e colaboradores
 
-This project is built with:
+### Estrutura do Projeto
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+```
+src/
+├── components/     # Componentes reutilizáveis
+├── pages/         # Páginas da aplicação
+├── hooks/         # Custom hooks
+├── integrations/  # Integrações (Supabase)
+└── lib/          # Utilitários
+```
 
-## How can I deploy this project?
+### Deploy
 
-Simply open [Lovable](https://lovable.dev/projects/6348068e-12a0-4f8e-add8-2b7b48717ba9) and click on Share -> Publish.
+Para fazer deploy:
 
-## Can I connect a custom domain to my Lovable project?
+1. Configure as variáveis de ambiente do Supabase
+2. Configure o Resend para emails
+3. Deploy em Vercel, Netlify ou similar
 
-Yes, you can!
+### Contribuição
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+1. Fork o projeto
+2. Crie uma branch para sua feature
+3. Commit suas mudanças
+4. Push para a branch
+5. Abra um Pull Request
