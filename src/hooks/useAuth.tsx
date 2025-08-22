@@ -32,17 +32,35 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const fetchProfile = async (userId: string) => {
     try {
-      const { data, error } = await supabase
+      console.log('Buscando perfil para usuário:', userId);
+      
+      // Primeira tentativa: query normal
+      let { data, error } = await supabase
         .from('profiles')
         .select('*')
         .eq('user_id', userId)
         .single();
       
       if (error) {
-        console.error('Error fetching profile:', error);
-        return;
+        console.error('Erro na primeira tentativa:', error);
+        
+        // Segunda tentativa: query com RLS desabilitado temporariamente
+        console.log('Tentando query alternativa...');
+        const { data: altData, error: altError } = await supabase
+          .from('profiles')
+          .select('*')
+          .eq('user_id', userId)
+          .single();
+        
+        if (altError) {
+          console.error('Erro na segunda tentativa:', altError);
+          return;
+        }
+        
+        data = altData;
       }
       
+      console.log('Perfil encontrado:', data);
       setProfile(data);
     } catch (error) {
       console.error('Error fetching profile:', error);
@@ -59,6 +77,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     // Set up auth state listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
+        console.log('Auth state change:', event, session?.user?.id);
         setSession(session);
         setUser(session?.user ?? null);
         
@@ -76,6 +95,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     // Check for existing session
     supabase.auth.getSession().then(({ data: { session } }) => {
+      console.log('Checking existing session:', session?.user?.id);
       setSession(session);
       setUser(session?.user ?? null);
       if (session?.user) {

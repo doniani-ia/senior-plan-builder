@@ -10,8 +10,14 @@ import { ProtectedRoute } from "@/components/ProtectedRoute";
 import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
 import AdminStudio from "./pages/AdminStudio";
+import AdminQuestionarios from "./pages/AdminQuestionarios";
+import AdminUsuarios from "./pages/AdminUsuarios";
+import AdminAcoesPDI from "./pages/AdminAcoesPDI";
 import ColaboradorProfile from "./pages/ColaboradorProfile";
+import ColaboradorAvaliacoes from "./pages/ColaboradorAvaliacoes";
 import AvaliarColaborador from "./pages/AvaliarColaborador";
+import Colaboradores from "./pages/Colaboradores";
+import VisualizarPDI from "./pages/VisualizarPDI";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -37,6 +43,30 @@ const App = () => (
               } 
             />
             <Route 
+              path="/admin/questionarios" 
+              element={
+                <ProtectedRoute allowedRoles={['admin']}>
+                  <AdminQuestionarios />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/admin/usuarios" 
+              element={
+                <ProtectedRoute allowedRoles={['admin']}>
+                  <AdminUsuarios />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/admin/acoes-pdi" 
+              element={
+                <ProtectedRoute allowedRoles={['admin']}>
+                  <AdminAcoesPDI />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
               path="/dashboard" 
               element={
                 <ProtectedRoute allowedRoles={['gestor']}>
@@ -53,10 +83,34 @@ const App = () => (
               } 
             />
             <Route 
+              path="/colaboradores" 
+              element={
+                <ProtectedRoute allowedRoles={['gestor']}>
+                  <Colaboradores />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/pdis" 
+              element={
+                <ProtectedRoute allowedRoles={['admin', 'gestor', 'colaborador']}>
+                  <VisualizarPDI />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
               path="/colaborador" 
               element={
                 <ProtectedRoute allowedRoles={['colaborador']}>
                   <ColaboradorProfile />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/colaborador/avaliacoes" 
+              element={
+                <ProtectedRoute allowedRoles={['colaborador']}>
+                  <ColaboradorAvaliacoes />
                 </ProtectedRoute>
               } 
             />

@@ -8,7 +8,8 @@ import {
   BarChart3, 
   Users, 
   FileText,
-  Shield 
+  Shield,
+  Target
 } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
@@ -44,19 +45,22 @@ export function Layout({ children }: LayoutProps) {
       items.push(
         { href: '/admin', label: 'Admin Studio', icon: Shield },
         { href: '/admin/questionarios', label: 'Questionários', icon: FileText },
-        { href: '/admin/usuarios', label: 'Usuários', icon: Users }
+        { href: '/admin/usuarios', label: 'Usuários', icon: Users },
+        { href: '/admin/acoes-pdi', label: 'Ações PDI', icon: Target },
+        { href: '/pdis', label: 'PDIs', icon: FileText }
       );
     } else if (profile.papel === 'gestor') {
       items.push(
         { href: '/dashboard', label: 'Dashboard', icon: BarChart3 },
         { href: '/avaliar', label: 'Avaliar Colaborador', icon: FileText },
-        { href: '/colaboradores', label: 'Meus Colaboradores', icon: Users }
+        { href: '/colaboradores', label: 'Meus Colaboradores', icon: Users },
+        { href: '/pdis', label: 'PDIs', icon: FileText }
       );
     } else {
       items.push(
         { href: '/colaborador', label: 'Meu Perfil', icon: User },
         { href: '/colaborador/avaliacoes', label: 'Minhas Avaliações', icon: BarChart3 },
-        { href: '/colaborador/pdi', label: 'Meus PDIs', icon: FileText }
+        { href: '/pdis', label: 'Meus PDIs', icon: FileText }
       );
     }
 
@@ -68,11 +72,11 @@ export function Layout({ children }: LayoutProps) {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="border-b bg-card shadow-professional-sm">
+              <header className="border-b bg-card shadow-sm">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center space-x-8">
             <Link to="/" className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
+              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
                 <BarChart3 className="w-5 h-5 text-white" />
               </div>
               <span className="text-xl font-semibold text-foreground">

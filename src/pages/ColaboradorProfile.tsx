@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import { Layout } from '@/components/Layout';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -11,69 +12,120 @@ import {
   FileText,
   Calendar,
   Target,
-  Award
+  Award,
+  BarChart3,
+  Eye
 } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
+import type { Database } from '@/integrations/supabase/types';
+import { Link } from 'react-router-dom';
 
 export default function ColaboradorProfile() {
   const { profile } = useAuth();
+  const { toast } = useToast();
+  
+  // Estados
+  const [avaliacoes, setAvaliacoes] = useState<any[]>([]);
+  const [pdis, setPdis] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
+  // Carregar dados do colaborador
+  const loadDadosColaborador = async () => {
+    if (!profile) return;
+    
+    try {
+      // Carregar avaliações
+      const { data: avaliacoesData, error: avaliacoesError } = await supabase
+        .from('avaliacoes')
+        .select('*')
+        .eq('avaliado_id', profile.id)
+        .order('created_at', { ascending: false })
+        .limit(5);
+
+      if (avaliacoesError) throw avaliacoesError;
+      setAvaliacoes(avaliacoesData || []);
+
+      // Carregar PDIs
+      const { data: pdisData, error: pdisError } = await supabase
+        .from('pdis')
+        .select('*')
+        .eq('colaborador_id', profile.id)
+        .order('created_at', { ascending: false })
+        .limit(5);
+
+      if (pdisError) throw pdisError;
+      setPdis(pdisData || []);
+    } catch (error) {
+      console.error('Erro ao carregar dados:', error);
+      toast({
+        title: 'Erro',
+        description: 'Não foi possível carregar seus dados',
+        variant: 'destructive',
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadDadosColaborador();
+  }, [profile]);
+
+  // Estatísticas dinâmicas
   const profileStats = [
     {
       title: 'Avaliações Realizadas',
-      value: '5',
+      value: avaliacoes.length.toString(),
       description: 'Total de avaliações',
       icon: FileText,
       color: 'text-primary'
     },
     {
       title: 'Nível Atual',
-      value: 'Pleno',
+      value: avaliacoes.length > 0 ? avaliacoes[0].nivel_calculado === 'junior' ? 'Júnior' : 
+             avaliacoes[0].nivel_calculado === 'pleno' ? 'Pleno' : 'Sênior' : 'N/A',
       description: 'Última avaliação',
       icon: TrendingUp,
       color: 'text-success'
     },
     {
       title: 'PDIs Ativos',
-      value: '2',
+      value: pdis.length.toString(),
       description: 'Em desenvolvimento',
       icon: Target,
       color: 'text-warning'
     },
     {
       title: 'Pontuação Média',
-      value: '7.8',
-      description: 'Escala 1-10',
+      value: avaliacoes.length > 0 
+        ? (avaliacoes.reduce((sum, av) => sum + av.pontuacao_total, 0) / avaliacoes.length).toFixed(1)
+        : '0',
+      description: 'Escala 0-100',
       icon: Award,
       color: 'text-accent'
     }
   ];
 
-  const recentEvaluations = [
-    {
-      id: '1',
-      data: '2024-01-15',
-      avaliador: 'Carlos Mendes',
-      nivel: 'Pleno',
-      pontuacao: 78,
-      status: 'PDI Criado'
-    },
-    {
-      id: '2',
-      data: '2023-11-20',
-      avaliador: 'Carlos Mendes',
-      nivel: 'Júnior',
-      pontuacao: 65,
-      status: 'Concluído'
-    },
-    {
-      id: '3',
-      data: '2023-08-10',
-      avaliador: 'Carlos Mendes',
-      nivel: 'Júnior',
-      pontuacao: 58,
-      status: 'Concluído'
-    }
-  ];
+  const getNivelBadge = (nivel: string) => {
+    const variants = {
+      junior: 'secondary',
+      pleno: 'default',
+      senior: 'destructive'
+    } as const;
+
+    const labels = {
+      junior: 'Júnior',
+      pleno: 'Pleno',
+      senior: 'Sênior'
+    };
+
+    return (
+      <Badge variant={variants[nivel as keyof typeof variants] || 'outline'}>
+        {labels[nivel as keyof typeof labels] || nivel}
+      </Badge>
+    );
+  };
 
   return (
     <Layout>
@@ -92,10 +144,10 @@ export default function ColaboradorProfile() {
         </div>
 
         {/* Profile Card */}
-        <Card className="shadow-professional-lg border-0">
+        <Card className="shadow-lg border-0">
           <CardHeader className="pb-4">
             <div className="flex items-center space-x-4">
-              <div className="w-16 h-16 rounded-full bg-gradient-primary flex items-center justify-center">
+              <div className="w-16 h-16 rounded-full bg-primary flex items-center justify-center">
                 <span className="text-2xl font-bold text-white">
                   {profile?.nome?.charAt(0).toUpperCase()}
                 </span>
@@ -124,7 +176,7 @@ export default function ColaboradorProfile() {
           {profileStats.map((stat) => {
             const IconComponent = stat.icon;
             return (
-              <Card key={stat.title} className="shadow-professional-md border-0">
+              <Card key={stat.title} className="shadow-md border-0">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-sm font-medium text-muted-foreground">
                     {stat.title}
@@ -143,7 +195,7 @@ export default function ColaboradorProfile() {
         </div>
 
         {/* Recent Evaluations */}
-        <Card className="shadow-professional-lg border-0">
+        <Card className="shadow-lg border-0">
           <CardHeader>
             <CardTitle>Histórico de Avaliações</CardTitle>
             <CardDescription>
@@ -151,51 +203,59 @@ export default function ColaboradorProfile() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
-              {recentEvaluations.map((evaluation) => (
-                <div 
-                  key={evaluation.id}
-                  className="flex items-center justify-between p-4 rounded-lg bg-muted/50 hover:bg-muted/70 transition-colors"
-                >
-                  <div className="flex items-center space-x-4">
-                    <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                      <Calendar className="w-5 h-5 text-primary" />
+            {avaliacoes.length === 0 ? (
+              <div className="text-center py-8">
+                <BarChart3 className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
+                <h3 className="text-lg font-semibold mb-2">Nenhuma avaliação encontrada</h3>
+                <p className="text-muted-foreground mb-4">
+                  Você ainda não possui avaliações de senioridade.
+                </p>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {avaliacoes.slice(0, 3).map((avaliacao) => (
+                  <div 
+                    key={avaliacao.id}
+                    className="flex items-center justify-between p-4 rounded-lg bg-muted/50 hover:bg-muted/70 transition-colors"
+                  >
+                    <div className="flex items-center space-x-4">
+                      <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                        <Calendar className="w-5 h-5 text-primary" />
+                      </div>
+                      <div>
+                        <p className="font-medium">
+                          Avaliação de {new Date(avaliacao.created_at).toLocaleDateString('pt-BR')}
+                        </p>
+                        <p className="text-sm text-muted-foreground">
+                          Pontuação: {avaliacao.pontuacao_total}/100
+                        </p>
+                      </div>
                     </div>
-                    <div>
-                      <p className="font-medium">
-                        Avaliação de {new Date(evaluation.data).toLocaleDateString('pt-BR')}
-                      </p>
-                      <p className="text-sm text-muted-foreground">
-                        Avaliador: {evaluation.avaliador}
-                      </p>
+                    <div className="flex items-center space-x-3">
+                      <div className="text-right">
+                        {getNivelBadge(avaliacao.nivel_calculado)}
+                      </div>
                     </div>
                   </div>
-                  <div className="flex items-center space-x-3">
-                    <div className="text-right">
-                      <p className="text-sm font-medium">{evaluation.pontuacao} pontos</p>
-                      <Badge 
-                        variant={evaluation.nivel === 'Sênior' ? 'default' : 
-                                evaluation.nivel === 'Pleno' ? 'secondary' : 'outline'}
-                      >
-                        {evaluation.nivel}
-                      </Badge>
-                    </div>
-                    <Badge 
-                      variant={evaluation.status === 'PDI Criado' ? 'default' : 'outline'}
-                      className={evaluation.status === 'PDI Criado' ? 'bg-success text-success-foreground' : ''}
-                    >
-                      {evaluation.status}
-                    </Badge>
+                ))}
+                {avaliacoes.length > 3 && (
+                  <div className="text-center pt-4">
+                    <Link to="/colaborador/avaliacoes">
+                      <Button variant="outline">
+                        <Eye className="w-4 h-4 mr-2" />
+                        Ver Todas as Avaliações ({avaliacoes.length})
+                      </Button>
+                    </Link>
                   </div>
-                </div>
-              ))}
-            </div>
+                )}
+              </div>
+            )}
           </CardContent>
         </Card>
 
         {/* Quick Actions */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <Card className="shadow-professional-md border-0 hover:shadow-professional-lg transition-shadow">
+          <Card className="shadow-md border-0 hover:shadow-lg transition-shadow">
             <CardHeader>
               <CardTitle className="flex items-center space-x-2">
                 <FileText className="w-5 h-5 text-primary" />
@@ -206,13 +266,16 @@ export default function ColaboradorProfile() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <Button className="w-full" variant="outline">
-                Ver Todas Avaliações
-              </Button>
+              <Link to="/colaborador/avaliacoes">
+                <Button className="w-full" variant="outline">
+                  <BarChart3 className="w-4 h-4 mr-2" />
+                  Ver Todas Avaliações
+                </Button>
+              </Link>
             </CardContent>
           </Card>
 
-          <Card className="shadow-professional-md border-0 hover:shadow-professional-lg transition-shadow">
+          <Card className="shadow-md border-0 hover:shadow-lg transition-shadow">
             <CardHeader>
               <CardTitle className="flex items-center space-x-2">
                 <Target className="w-5 h-5 text-primary" />
@@ -223,9 +286,12 @@ export default function ColaboradorProfile() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <Button className="w-full" variant="outline">
-                Ver Meus PDIs
-              </Button>
+              <Link to="/pdis">
+                <Button className="w-full" variant="outline">
+                  <Target className="w-4 h-4 mr-2" />
+                  Ver Meus PDIs
+                </Button>
+              </Link>
             </CardContent>
           </Card>
         </div>

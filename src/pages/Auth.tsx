@@ -39,9 +39,12 @@ export default function Auth() {
     e.preventDefault();
     setIsLoading(true);
 
+    console.log('Tentando fazer login com:', { email: loginEmail });
+
     const { error } = await signIn(loginEmail, loginPassword);
 
     if (error) {
+      console.error('Erro no login:', error);
       toast({
         title: 'Erro no login',
         description: error.message === 'Invalid login credentials' 
@@ -49,6 +52,8 @@ export default function Auth() {
           : error.message,
         variant: 'destructive',
       });
+    } else {
+      console.log('Login bem-sucedido, aguardando perfil...');
     }
 
     setIsLoading(false);
@@ -90,7 +95,7 @@ export default function Auth() {
         {/* Brand side */}
         <div className="text-center md:text-left space-y-6">
           <div className="flex items-center justify-center md:justify-start space-x-3">
-            <div className="w-12 h-12 bg-gradient-primary rounded-xl flex items-center justify-center shadow-professional-lg">
+            <div className="w-12 h-12 bg-primary rounded-xl flex items-center justify-center shadow-lg">
               <BarChart3 className="w-7 h-7 text-white" />
             </div>
             <span className="text-3xl font-bold text-foreground">SeniorityEval</span>
@@ -123,7 +128,7 @@ export default function Auth() {
         </div>
 
         {/* Auth form */}
-        <Card className="w-full shadow-professional-xl border-0">
+        <Card className="w-full shadow-xl border-0">
           <CardHeader className="space-y-1">
             <CardTitle className="text-2xl text-center">Bem-vindo</CardTitle>
             <CardDescription className="text-center">
@@ -164,7 +169,7 @@ export default function Auth() {
                   </div>
                   <Button 
                     type="submit" 
-                    className="w-full h-11 bg-gradient-primary hover:opacity-90 transition-opacity" 
+                    className="w-full h-11 bg-primary hover:opacity-90 transition-opacity" 
                     disabled={isLoading}
                   >
                     {isLoading ? 'Entrando...' : 'Entrar'}
@@ -213,7 +218,7 @@ export default function Auth() {
                   </div>
                   <Button 
                     type="submit" 
-                    className="w-full h-11 bg-gradient-primary hover:opacity-90 transition-opacity" 
+                    className="w-full h-11 bg-primary hover:opacity-90 transition-opacity" 
                     disabled={isLoading}
                   >
                     {isLoading ? 'Criando conta...' : 'Criar conta'}

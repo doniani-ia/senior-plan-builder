@@ -85,7 +85,7 @@ export default function Dashboard() {
             </p>
           </div>
           <Link to="/avaliar">
-            <Button className="bg-gradient-primary hover:opacity-90">
+            <Button className="bg-primary hover:opacity-90">
               <Plus className="w-4 h-4 mr-2" />
               Nova Avaliação
             </Button>
@@ -97,7 +97,7 @@ export default function Dashboard() {
           {stats.map((stat) => {
             const IconComponent = stat.icon;
             return (
-              <Card key={stat.title} className="shadow-professional-md border-0">
+              <Card key={stat.title} className="shadow-md border-0">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-sm font-medium text-muted-foreground">
                     {stat.title}
@@ -116,7 +116,7 @@ export default function Dashboard() {
         </div>
 
         {/* Recent Evaluations */}
-        <Card className="shadow-professional-lg border-0">
+        <Card className="shadow-lg border-0">
           <CardHeader className="flex flex-row items-center justify-between">
             <div>
               <CardTitle>Avaliações Recentes</CardTitle>
@@ -168,7 +168,7 @@ export default function Dashboard() {
 
         {/* Quick Actions */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Card className="shadow-professional-md border-0 hover:shadow-professional-lg transition-shadow">
+          <Card className="shadow-md border-0 hover:shadow-lg transition-shadow">
             <CardHeader>
               <CardTitle className="flex items-center space-x-2">
                 <FileText className="w-5 h-5 text-primary" />
@@ -187,7 +187,7 @@ export default function Dashboard() {
             </CardContent>
           </Card>
 
-          <Card className="shadow-professional-md border-0 hover:shadow-professional-lg transition-shadow">
+          <Card className="shadow-md border-0 hover:shadow-lg transition-shadow">
             <CardHeader>
               <CardTitle className="flex items-center space-x-2">
                 <Users className="w-5 h-5 text-primary" />
@@ -206,7 +206,7 @@ export default function Dashboard() {
             </CardContent>
           </Card>
 
-          <Card className="shadow-professional-md border-0 hover:shadow-professional-lg transition-shadow">
+          <Card className="shadow-md border-0 hover:shadow-lg transition-shadow">
             <CardHeader>
               <CardTitle className="flex items-center space-x-2">
                 <TrendingUp className="w-5 h-5 text-primary" />

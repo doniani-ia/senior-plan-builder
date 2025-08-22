@@ -16,7 +16,36 @@ import {
 import { Link } from 'react-router-dom';
 
 export default function AdminStudio() {
-  const { profile } = useAuth();
+  const { profile, loading } = useAuth();
+
+  if (loading) {
+    return (
+      <Layout>
+        <div className="space-y-8">
+          <div className="animate-pulse">
+            <div className="h-8 bg-gray-200 rounded w-1/4 mb-4"></div>
+            <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+          </div>
+        </div>
+      </Layout>
+    );
+  }
+
+  if (!profile) {
+    return (
+      <Layout>
+        <div className="space-y-8">
+          <div className="text-center py-12">
+            <Shield className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
+            <h3 className="text-lg font-semibold mb-2">Perfil não encontrado</h3>
+            <p className="text-muted-foreground">
+              Não foi possível carregar seu perfil de usuário.
+            </p>
+          </div>
+        </div>
+      </Layout>
+    );
+  }
 
   const adminStats = [
     {
@@ -92,7 +121,7 @@ export default function AdminStudio() {
               </Button>
             </Link>
             <Link to="/admin/usuarios">
-              <Button className="bg-gradient-primary hover:opacity-90">
+              <Button className="bg-primary hover:opacity-90">
                 <Plus className="w-4 h-4 mr-2" />
                 Novo Usuário
               </Button>
@@ -105,7 +134,7 @@ export default function AdminStudio() {
           {adminStats.map((stat) => {
             const IconComponent = stat.icon;
             return (
-              <Card key={stat.title} className="shadow-professional-md border-0">
+              <Card key={stat.title} className="shadow-md border-0">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-sm font-medium text-muted-foreground">
                     {stat.title}
@@ -124,7 +153,7 @@ export default function AdminStudio() {
         </div>
 
         {/* System Status */}
-        <Card className="shadow-professional-lg border-0">
+        <Card className="shadow-lg border-0">
           <CardHeader>
             <CardTitle className="flex items-center space-x-2">
               <Settings className="w-5 h-5 text-primary" />
@@ -158,7 +187,7 @@ export default function AdminStudio() {
 
         {/* Admin Actions */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <Card className="shadow-professional-md border-0 hover:shadow-professional-lg transition-shadow">
+          <Card className="shadow-md border-0 hover:shadow-lg transition-shadow">
             <CardHeader>
               <CardTitle className="flex items-center space-x-2">
                 <FileText className="w-5 h-5 text-primary" />
@@ -175,14 +204,16 @@ export default function AdminStudio() {
                   Ver Questionários
                 </Button>
               </Link>
-              <Button variant="outline" className="w-full">
-                <Plus className="w-4 h-4 mr-2" />
-                Criar Questionário
-              </Button>
+              <Link to="/admin/questionarios">
+                <Button variant="outline" className="w-full">
+                  <Plus className="w-4 h-4 mr-2" />
+                  Criar Questionário
+                </Button>
+              </Link>
             </CardContent>
           </Card>
 
-          <Card className="shadow-professional-md border-0 hover:shadow-professional-lg transition-shadow">
+          <Card className="shadow-md border-0 hover:shadow-lg transition-shadow">
             <CardHeader>
               <CardTitle className="flex items-center space-x-2">
                 <Users className="w-5 h-5 text-primary" />
@@ -199,14 +230,16 @@ export default function AdminStudio() {
                   Ver Usuários
                 </Button>
               </Link>
-              <Button variant="outline" className="w-full">
-                <Plus className="w-4 h-4 mr-2" />
-                Criar Usuário
-              </Button>
+              <Link to="/admin/usuarios">
+                <Button variant="outline" className="w-full">
+                  <Plus className="w-4 h-4 mr-2" />
+                  Criar Usuário
+                </Button>
+              </Link>
             </CardContent>
           </Card>
 
-          <Card className="shadow-professional-md border-0 hover:shadow-professional-lg transition-shadow">
+          <Card className="shadow-md border-0 hover:shadow-lg transition-shadow">
             <CardHeader>
               <CardTitle className="flex items-center space-x-2">
                 <Database className="w-5 h-5 text-primary" />
@@ -217,20 +250,24 @@ export default function AdminStudio() {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-3">
-              <Button className="w-full mb-2">
-                <Eye className="w-4 h-4 mr-2" />
-                Ver Ações PDI
-              </Button>
-              <Button variant="outline" className="w-full">
-                <Plus className="w-4 h-4 mr-2" />
-                Nova Ação
-              </Button>
+              <Link to="/admin/acoes-pdi">
+                <Button className="w-full mb-2">
+                  <Eye className="w-4 h-4 mr-2" />
+                  Ver Ações PDI
+                </Button>
+              </Link>
+              <Link to="/admin/acoes-pdi">
+                <Button variant="outline" className="w-full">
+                  <Plus className="w-4 h-4 mr-2" />
+                  Nova Ação
+                </Button>
+              </Link>
             </CardContent>
           </Card>
         </div>
 
         {/* Recent Activity */}
-        <Card className="shadow-professional-lg border-0">
+        <Card className="shadow-lg border-0">
           <CardHeader>
             <CardTitle>Atividade Recente</CardTitle>
             <CardDescription>
