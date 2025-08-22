@@ -98,7 +98,7 @@ export default function Auth() {
             <div className="w-12 h-12 bg-primary rounded-xl flex items-center justify-center shadow-lg">
               <BarChart3 className="w-7 h-7 text-white" />
             </div>
-            <span className="text-3xl font-bold text-foreground">SeniorityEval</span>
+                            <span className="text-3xl font-bold text-foreground">Vendas Pro - PDI</span>
           </div>
           
           <div className="space-y-4">

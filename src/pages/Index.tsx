@@ -31,7 +31,7 @@ const Index = () => {
           <div className="w-16 h-16 bg-primary rounded-xl flex items-center justify-center shadow-lg">
             <BarChart3 className="w-8 h-8 text-white" />
           </div>
-          <span className="text-4xl font-bold text-foreground">SeniorityEval</span>
+                          <span className="text-4xl font-bold text-foreground">Vendas Pro - PDI</span>
         </div>
         
         <h1 className="text-3xl font-bold text-foreground mb-4">

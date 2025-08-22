@@ -1,4 +1,4 @@
-# 📧 Sistema de Email - SeniorityEval
+# 📧 Sistema de Email - Vendas Pro - PDI
 
 ## 🎯 **Item E - Envio de Email (Resend + Edge Function)**
 
@@ -170,7 +170,7 @@ supabase secrets set RESEND_API_KEY=re_xxxxxxxxxx
 
 ### 🏆 **Projeto 100% Completo!**
 
-O sistema SeniorityEval está agora completamente funcional com:
+O sistema Vendas Pro - PDI está agora completamente funcional com:
 - ✅ Autenticação e autorização
 - ✅ Gestão de questionários
 - ✅ Avaliações de senioridade

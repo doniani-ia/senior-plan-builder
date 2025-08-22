@@ -80,7 +80,7 @@ export function Layout({ children }: LayoutProps) {
                 <BarChart3 className="w-5 h-5 text-white" />
               </div>
               <span className="text-xl font-semibold text-foreground">
-                SeniorityEval
+                Vendas Pro - PDI
               </span>
             </Link>
 

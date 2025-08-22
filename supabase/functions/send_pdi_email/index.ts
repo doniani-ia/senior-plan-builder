@@ -211,7 +211,7 @@ serve(async (req) => {
             </div>
 
             <div class="footer">
-              <p>Este email foi gerado automaticamente pelo sistema SeniorityEval.</p>
+              <p>Este email foi gerado automaticamente pelo sistema Vendas Pro - PDI.</p>
               <p>Para dúvidas, entre em contato com seu gestor: ${gestor.nome} (${gestor.email})</p>
             </div>
           </div>
@@ -227,7 +227,7 @@ serve(async (req) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: 'SeniorityEval <noreply@seniorityeval.com>',
+        from: 'Vendas Pro - PDI <noreply@vendas-pro.com>',
         to: [colaborador.email],
         subject: `PDI Gerado - ${colaborador.nome}`,
         html: emailHTML,
@@ -318,7 +318,7 @@ serve(async (req) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: 'SeniorityEval <noreply@seniorityeval.com>',
+        from: 'Vendas Pro - PDI <noreply@vendas-pro.com>',
         to: [gestor.email],
         subject: `PDI Gerado - ${colaborador.nome}`,
         html: managerEmailHTML,

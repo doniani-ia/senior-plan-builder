@@ -3,7 +3,7 @@
 # Script automatizado para configurar sistema de email
 # Execute: chmod +x setup_email_automated.sh && ./setup_email_automated.sh
 
-echo "🚀 Configurando Sistema de Email - SeniorityEval"
+echo "🚀 Configurando Sistema de Email - Vendas Pro - PDI"
 echo "================================================"
 
 # Verificar se Node.js está instalado

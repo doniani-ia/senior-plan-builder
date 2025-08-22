@@ -25,7 +25,7 @@
 
 ### 2.2 Criar nova API Key
 - Clique em "Create API Key"
-- Dê um nome como "SeniorityEval"
+- Dê um nome como "Vendas Pro - PDI"
 - Clique em "Create"
 
 ### 2.3 Copiar a chave

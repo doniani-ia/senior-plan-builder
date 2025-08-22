@@ -13,7 +13,7 @@ INSERT INTO auth.users (
   raw_user_meta_data
 ) VALUES (
   gen_random_uuid(),
-  'admin@seniorityeval.com',
+  'admin@vendas-pro.com',
   crypt('admin123', gen_salt('bf')),
   now(),
   now(),
@@ -29,9 +29,9 @@ INSERT INTO public.profiles (
   email,
   papel
 ) VALUES (
-  (SELECT id FROM auth.users WHERE email = 'admin@seniorityeval.com'),
+  (SELECT id FROM auth.users WHERE email = 'admin@vendas-pro.com'),
   'Administrador Sistema',
-  'admin@seniorityeval.com',
+  'admin@vendas-pro.com',
   'admin'
 );
 
@@ -42,7 +42,7 @@ INSERT INTO public.questionarios (titulo, descricao, versao, status, created_by)
   'Questionário completo para avaliação de competências técnicas, processos e comportamentais',
   1,
   'ativo',
-  (SELECT id FROM public.profiles WHERE email = 'admin@seniorityeval.com')
+  (SELECT id FROM public.profiles WHERE email = 'admin@vendas-pro.com')
 );
 
 -- 4. Inserir perguntas
