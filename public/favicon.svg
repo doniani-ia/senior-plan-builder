@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
+  <!-- Background -->
+  <rect width="32" height="32" fill="#3b82f6" rx="6"/>
+  
+  <!-- Chart bars representing PDI -->
+  <rect x="6" y="20" width="3" height="8" fill="white" rx="1"/>
+  <rect x="11" y="16" width="3" height="12" fill="white" rx="1"/>
+  <rect x="16" y="12" width="3" height="16" fill="white" rx="1"/>
+  <rect x="21" y="8" width="3" height="20" fill="white" rx="1"/>
+  <rect x="26" y="4" width="3" height="24" fill="white" rx="1"/>
+  
+  <!-- PDI text -->
+  <text x="16" y="28" text-anchor="middle" font-family="Arial, sans-serif" font-size="6" font-weight="bold" fill="white">PDI</text>
+</svg>
